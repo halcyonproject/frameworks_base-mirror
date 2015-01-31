@@ -585,6 +585,7 @@ android_library {
         "keepanno-annotations",
     ],
     manifest: "AndroidManifest.xml",
+    additional_manifests: ["HalcyonManifest.xml"],
 
     javacflags: [
         "-Adagger.fastInit=enabled",
