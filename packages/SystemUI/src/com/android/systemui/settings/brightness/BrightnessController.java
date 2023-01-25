@@ -36,6 +36,8 @@ import android.os.PowerManager;
 import android.os.RemoteException;
 import android.os.UserHandle;
 import android.os.UserManager;
+import android.os.Vibrator;
+import android.os.VibrationEffect;
 import android.provider.Settings;
 import android.service.vr.IVrManager;
 import android.service.vr.IVrStateCallbacks;
@@ -120,6 +122,10 @@ public class BrightnessController implements ToggleSlider.Listener, MirroredBrig
     private float mBrightnessMax = PowerManager.BRIGHTNESS_MAX;
 
     private ValueAnimator mSliderAnimator;
+
+    private Vibrator mVibrator;
+    private static final VibrationEffect BRIGHTNESS_SLIDER_HAPTIC =
+            VibrationEffect.get(VibrationEffect.EFFECT_TICK);
 
     @Override
     public void setMirror(@Nullable MirrorController controller) {
@@ -351,6 +357,11 @@ public class BrightnessController implements ToggleSlider.Listener, MirroredBrig
         mAutomaticAvailable = context.getResources().getBoolean(
                 com.android.internal.R.bool.config_automatic_brightness_available);
 
+        mVibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+        if (mVibrator == null || !mVibrator.hasVibrator()) {
+            mVibrator = null;
+        }
+
         if (mIcon != null) {
             if (mAutomaticAvailable) {
                 mIcon.setOnClickListener(new View.OnClickListener() {
@@ -415,6 +426,11 @@ public class BrightnessController implements ToggleSlider.Listener, MirroredBrig
         if (starting) {
             logBrightnessChange(mDisplayId, valFloat, true);
         }
+
+        // Give haptic feedback only if brightness is changed manually
+        if (tracking)
+            mVibrator.vibrate(BRIGHTNESS_SLIDER_HAPTIC);
+
         if (!tracking) {
             AsyncTask.execute(new Runnable() {
                     public void run() {
