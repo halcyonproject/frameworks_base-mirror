@@ -231,9 +231,7 @@ public class DevicePropsSpoofing {
                 || Arrays.asList(packagesToChangePixel5a).contains(packageName)
                 || Arrays.asList(extraPackagesToChange).contains(packageName)) {
 
-            if (packageName.equals("com.google.android.apps.photos")) {
-                propsToChange.putAll(propsToChangePixelXL);
-            } else if (Arrays.asList(packagesToKeep).contains(packageName) || isPixelDevice) {
+            if (Arrays.asList(packagesToKeep).contains(packageName) || isPixelDevice) {
                 return;
             } else if (packageName.equals("com.android.vending")) {
                 sIsFinsky = true;
@@ -244,9 +242,10 @@ public class DevicePropsSpoofing {
                 } else {
                     propsToChange.putAll(propsToChangePixel5a);
                 }
-                if (packageName.equals("com.google.android.apps.photos")) {
-                    propsToChange.putAll(propsToChangePixelXL);
-                }
+            }
+
+	    if (packageName.equals("com.google.android.apps.photos")) {
+                propsToChange.putAll(propsToChangePixelXL);
             }
 
             if (DEBUG) Log.d(TAG, "Defining props for: " + packageName);

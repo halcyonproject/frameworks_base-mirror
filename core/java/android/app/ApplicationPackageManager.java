@@ -905,7 +905,6 @@ public class ApplicationPackageManager extends PackageManager {
 
         if (packageName != null
                 && (packageName.equals("com.google.android.googlequicksearchbox")
-                || packageName.equals("com.google.android.apps.photos")
                 || packageName.equals("com.google.android.apps.pixel.agent")
                 || packageName.equals("com.google.android.apps.pixel.creativeassistant")
                 || packageName.equals("com.google.android.dialer")
@@ -913,6 +912,14 @@ public class ApplicationPackageManager extends PackageManager {
             if (Arrays.asList(featuresPixel).contains(name)) return true;
             if (Arrays.asList(featuresPixelOthers).contains(name)) return true;
             if (Arrays.asList(featuresTensor).contains(name)) return true;
+            if (Arrays.asList(featuresNexus).contains(name)) return true;
+        }
+
+        if (packageName != null
+                && packageName.equals("com.google.android.apps.photos")) {
+            if (Arrays.asList(featuresPixel).contains(name)) return false;
+            if (Arrays.asList(featuresPixelOthers).contains(name)) return true;
+            if (Arrays.asList(featuresTensor).contains(name)) return false;
             if (Arrays.asList(featuresNexus).contains(name)) return true;
         }
 
