@@ -113,12 +113,6 @@ public class DevicePropsSpoofing {
             "com.google.oslo"
     };
 
-    private static final String[] customGoogleCameraPackages = {
-            "com.google.android.MTCL83",
-            "com.google.android.UltraCVM",
-            "com.google.android.apps.cameralite"
-    };
-
     // Codenames for currently supported Pixels by Google
     private static final String[] pixelCodenames = {
             "komodo",
@@ -175,11 +169,6 @@ public class DevicePropsSpoofing {
         propsToChangePixelXL.put("MODEL", "Pixel XL");
         propsToChangePixelXL.put("ID", "QP1A.191005.007.A3");
         propsToChangePixelXL.put("FINGERPRINT", "google/marlin/marlin:10/QP1A.191005.007.A3/5972272:user/release-keys");
-    }
-
- private static boolean isGoogleCameraPackage(String packageName) {
-        return packageName.startsWith("com.google.android.GoogleCamera") ||
-                Arrays.asList(customGoogleCameraPackages).contains(packageName);
     }
 
     private static String getBuildID(String fingerprint) {
@@ -244,8 +233,7 @@ public class DevicePropsSpoofing {
 
             if (packageName.equals("com.google.android.apps.photos")) {
                 propsToChange.putAll(propsToChangePixelXL);
-            } else if (Arrays.asList(packagesToKeep).contains(packageName) ||
-                       isGoogleCameraPackage(packageName) || isPixelDevice) {
+            } else if (Arrays.asList(packagesToKeep).contains(packageName) || isPixelDevice) {
                 return;
             } else if (packageName.equals("com.android.vending")) {
                 sIsFinsky = true;
