@@ -408,6 +408,14 @@ public final class KeyboardShortcuts {
         showKeyboardShortcutsDialog(shortcutGroups);
     }
 
+    static void sanitiseShortcuts(List<KeyboardShortcutGroup> shortcutGroups) {
+        for (KeyboardShortcutGroup group : shortcutGroups) {
+            for (KeyboardShortcutInfo info : group.getItems()) {
+                info.clearIcon();
+            }
+        }
+    }
+
     private void dismissKeyboardShortcuts() {
         if (mKeyboardShortcutsDialog != null) {
             mKeyboardShortcutsDialog.dismiss();
